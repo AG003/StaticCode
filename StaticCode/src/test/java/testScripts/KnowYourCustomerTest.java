@@ -8,48 +8,42 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import driverManager.DriverManager;
+import manager.PageManager;
 import pageObject.CustomerDueDeligence;
 import pageObject.CustomerDueDeligencePreviewPage;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 
-public class KnowYourCustomerTest 
+public class KnowYourCustomerTest extends DriverManager
 {
 	public WebDriver driver;
 	public HomePage homePage;
 	public LoginPage loginPage;
 	public CustomerDueDeligence customerDueDeligence; 
 	public CustomerDueDeligencePreviewPage customerDueDeligencePreviewPage;
+	public PageManager pageManager;
 	
-	@BeforeMethod
-	public void configBM()
-	{
-		System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		driver.get("https://url");
-	}
+	
 	
 	@Test
 	public void completKYC()
 	{
-		loginPage = new LoginPage(driver);
-		customerDueDeligencePreviewPage = new CustomerDueDeligencePreviewPage(driver);
-		loginPage.loginAsAnalyst();
-		homePage.clickOnCDD();
-		customerDueDeligence.openRequest();
-		customerDueDeligence.enterQuestionsDetails();
-		customerDueDeligence.clickOnNextButton();
-		customerDueDeligencePreviewPage.clickOnSubmitButton();
+		pageManager = new PageManager(driver);
+		loginPage = pageManager.getLoginPage();
+		customerDueDeligence = pageManager.getCustomerDueDeligence();
+		customerDueDeligencePreviewPage = pageManager.getCustomerDueDeligencePreviewPage();
+		
+		loginPage.loginAsAnalyst(); // login as analyst
+		homePage.clickOnCDD(); // click on customer due deligence
+		customerDueDeligence.openRequest(); // open the request
+		customerDueDeligence.enterQuestionsDetails(); // enter the required questions details
+		customerDueDeligence.clickOnNextButton(); // click on next
+		customerDueDeligencePreviewPage.clickOnSubmitButton(); // just to verify all the details
+		homePage.logOut(); //logout 
 	}
 	
 	
-	@AfterMethod
-	public void configAM()
-	{
-		homePage.logOut();
-		driver.quit();
-	}
+	
 
 }

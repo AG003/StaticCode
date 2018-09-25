@@ -1,0 +1,11 @@
+<suite name="Test - Suite">
+	<test name="Static Code">
+		<classes>
+			<class name="testScripts.LoginTest" />
+			<class name="testScripts.ClientRequestTest" />
+			<class name="testScripts.KnowYourCustomerTest" />
+			<class name="testScripts.QualityControlTest" />
+			<class name="testScripts.RiskRatingTest" />
+		</classes>
+	</test>
+</suite>

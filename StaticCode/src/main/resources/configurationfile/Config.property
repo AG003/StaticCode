@@ -1,0 +1,4 @@
+url = https://yourApplicationAddress
+key = webdriver.chrome.driver
+pathValue = ./src/main/resources/chromedriver.exe
+browserName = chrome

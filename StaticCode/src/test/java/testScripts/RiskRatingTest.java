@@ -8,46 +8,37 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import driverManager.DriverManager;
+import manager.PageManager;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 import pageObject.RiskRatingPage;
 
-public class RiskRatingTest 
+public class RiskRatingTest extends DriverManager
 {
 	WebDriver driver;
 	LoginPage loginPage;
 	HomePage homePage;
 	RiskRatingPage riskRatingPage;
+	PageManager pageManager;
 	
 	
-	@BeforeMethod
-	public void configBM()
-	{
-		System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		driver.get("https://url");
-	}
 	
 	@Test
 	public void RRTask()
 	{
-		loginPage = new LoginPage(driver);
-		homePage = new HomePage(driver);
-		riskRatingPage = new RiskRatingPage(driver);
+		pageManager = new PageManager(driver);
+		loginPage = pageManager.getLoginPage();
+		homePage = pageManager.getHomePage();
+		riskRatingPage = pageManager.getRiskRatingPage();
 		
-		loginPage.loginAsAnalyst();
-		homePage.clickOnRR();
-		riskRatingPage.fillDetails();
-		riskRatingPage.clickOnSubmit();
+		loginPage.loginAsAnalyst(); // login as analyst
+		homePage.clickOnRR(); // move to risk rating page
+		riskRatingPage.fillDetails(); // enter the details required 
+		riskRatingPage.clickOnSubmit(); // click on submit button
+		homePage.logOut(); //logout 
 	}
 	
-	@AfterMethod
-	public void configAM()
-	{
-		homePage.logOut();
-		driver.quit();
-	}
+
 
 }

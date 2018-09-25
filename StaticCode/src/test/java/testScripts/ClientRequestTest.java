@@ -8,6 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import manager.PageManager;
 import pageObject.ClientRequestPage;
 import pageObject.HomePage;
 import pageObject.LoginPage;
@@ -17,7 +18,8 @@ public class ClientRequestTest
 	public WebDriver driver;
 	public HomePage homePage;
 	public LoginPage loginPage;
-	ClientRequestPage clientRequestPage;
+	public ClientRequestPage clientRequestPage;
+	public PageManager pageManager;
 	
 	@BeforeMethod
 	public void configBM()
@@ -32,19 +34,25 @@ public class ClientRequestTest
 	@Test
 	public void createClient()
 	{
-		loginPage = new LoginPage(driver);
-		loginPage.loginAsSalesPerson();
-		homePage = new HomePage(driver);
-		homePage.clickOnClientRequest();
-		clientRequestPage = new ClientRequestPage(driver);
-		clientRequestPage.fillPersonalDetails();
+		pageManager = new PageManager(driver);
+		loginPage = pageManager.getLoginPage();
+		homePage = pageManager.getHomePage();
+		clientRequestPage = pageManager.getClientRequestpage();
+		
+		loginPage.loginAsSalesPerson(); // login as salesperson
+		homePage.clickOnClientRequest(); // click on client request
+		clientRequestPage.fillPersonalDetails(); // fill all the details
+		clientRequestPage.clickOnSubmitButton(); // save the details
+		homePage.logOut(); //logout
 	}
 	
 	@AfterMethod
 	public void configAM()
 	{
-		homePage.logOut();
-		driver.quit();
+		if(driver != null)
+		{
+			driver.quit(); // if driver is not null quit the browser
+		}
 	}
 
 }

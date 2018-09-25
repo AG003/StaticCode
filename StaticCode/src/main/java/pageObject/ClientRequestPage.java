@@ -80,7 +80,6 @@ public class ClientRequestPage
 		enterLocalAddress("Noida, India");
 		enterPermanentAddress("Delhi, India");
 		selectBranchCode("KBCBANK0000735");
-		clickOnSubmitButton();
 	}
 	
 	
