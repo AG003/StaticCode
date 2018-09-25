@@ -8,12 +8,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import driverManager.DriverManager;
 import manager.PageManager;
 import pageObject.ClientRequestPage;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 
-public class ClientRequestTest 
+public class ClientRequestTest extends DriverManager
 {
 	public WebDriver driver;
 	public HomePage homePage;
@@ -21,15 +22,7 @@ public class ClientRequestTest
 	public ClientRequestPage clientRequestPage;
 	public PageManager pageManager;
 	
-	@BeforeMethod
-	public void configBM()
-	{
-		System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		driver.get("https://url");
-	}
+	
 	
 	@Test
 	public void createClient()
@@ -46,13 +39,5 @@ public class ClientRequestTest
 		homePage.logOut(); //logout
 	}
 	
-	@AfterMethod
-	public void configAM()
-	{
-		if(driver != null)
-		{
-			driver.quit(); // if driver is not null quit the browser
-		}
-	}
-
+	
 }
